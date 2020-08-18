@@ -1,4 +1,4 @@
-
+// Here we have the data hub of our App (store) and the actions that affect it.
 const getState = ({ getStore, getActions, setStore }) => {
 	// This are the variables of the API, each needed to fetch data from Marvel API
 	const APIurl = "https://gateway.marvel.com/v1/public/";

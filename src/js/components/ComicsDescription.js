@@ -39,7 +39,7 @@ const Info = styled.div`
 	text-align: ${props => (props.justify ? "justify" : "")};
 `;
 
-// FUnctional Component
+// Functional Component
 export const ComicsDescription = ({ comic, hide }) => {
 	const { store, actions } = useContext(Context);
 

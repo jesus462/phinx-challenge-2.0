@@ -1,9 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Home from './Home';
+import { Home } from './Home';
 
-test('renders learn react link', () => {
-  const { getByText } = render(<Home />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('checking a passing test', () => {
+  const sum = (a, b) => {
+    return a+b;
+  };
+  expect(sum(1, 2)).toEqual(3);;
 });
+ 

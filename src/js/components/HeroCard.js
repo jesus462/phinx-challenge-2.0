@@ -59,7 +59,7 @@ export const HeroCard = ({ character, check, setCheck }) => {
 	};
 
 	// With this checker i'm ensuring that if the user goes to another page or does a search and the character
-	// he has clicked as favorite appears again mantains the star that shows it has been clicked already.
+	// he has clicked as favorite appears again, maintains the star that shows it has been clicked already.
 	let favoriteChecker = store.favorites.characters.filter(favorite => {
 		return favorite.id === character.id;
 	});

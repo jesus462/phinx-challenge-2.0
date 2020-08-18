@@ -64,7 +64,7 @@ export const Navbar = ({ currentView }) => {
 		actions.setLoadingCharacters(store.loadingCharacters);
 	};
 	// This use effect makes sure that the action of fetching the characters gets done every time the search 
-	// parameter changes, thats why is between [].
+	// parameter changes, thats why search is between [].
 	useEffect(
 		() => {
 			actions.fetchCharacters(search);
