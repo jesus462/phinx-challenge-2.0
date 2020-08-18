@@ -1,5 +1,5 @@
 const getState = ({ getStore, getActions, setStore }) => {
-	const APIurl = "http://gateway.marvel.com/v1/public/";
+	const APIurl = "https://gateway.marvel.com/v1/public/";
 	const APIkey = "68ae068a26531d4f74e599e28494d5db";
 	const timeStamp = "1";
 	const hash = "762b7ecb8ae6158120a012769dfe88fb";
@@ -60,10 +60,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			fetchCharacterComic: async APIComicsUrl => {
-				let resources = [];
+                let resources = [];
+                let splitAPI = APIComicsUrl.split(":")[1];
+                let secureProtocol = `https:${splitAPI}`
 
 				try {
-					let response = await fetch(`${APIComicsUrl}?ts=${timeStamp}&apikey=${APIkey}&hash=${hash}`, {
+					let response = await fetch(`${secureProtocol}?ts=${timeStamp}&apikey=${APIkey}&hash=${hash}`, {
 						method: "GET",
 						headers: {
 							"Content-Type": "application/JSON"
