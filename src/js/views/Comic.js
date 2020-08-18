@@ -1,10 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { Context } from "../store/Context";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { Navbar } from "../components/Navbar";
 
+// Styled Components
 const Container = styled.div`
 	width: 100%;
 	height: 800px;
@@ -67,11 +68,12 @@ const LinkBack = styled(Link)`
 	}
 `;
 
+// Functional Component
 export const Comic = () => {
 	const { store, actions } = useContext(Context);
 
 	const conditionedRender = () => {
-		if (store.comic.length != 0) {
+		if (store.comic.length !== 0) {
 			return (
 				<React.Fragment>
 					<ComicImage
@@ -95,7 +97,7 @@ export const Comic = () => {
 			<Container>
 				<LinkBack absolute={store.comic.length > 0} to="/">
 					<i className="fas fa-chevron-left" /> Back
-					{store.comic.length != 0 ? "" : ", No comic selected, keep looking!!!"}
+					{store.comic.length !== 0 ? "" : ", No comic selected, keep looking!!!"}
 				</LinkBack>
 				{conditionedRender()}
 			</Container>

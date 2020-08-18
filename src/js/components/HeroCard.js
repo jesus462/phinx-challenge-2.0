@@ -1,23 +1,24 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Context } from "../store/Context";
 import styled from "styled-components";
 
 import { ComicsModal } from "./ComicsModal";
 import { useModal } from "../utils/useModal";
 
+// Styled Components
 const Card = styled.div`
 	margin: 15px;
 	width: 240px;
-	height: 340px;
+	height: 320px;
 	border: 1px solid black;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	position: relative;
 	@media (max-width: 605px) {
-		width: 140px;
-		height: 240px;
-		margin: 10px 5px;
+		width: 130px;
+		height: 210px;
+		margin: 10px 10px;
 	}
 
 	:hover,
@@ -47,6 +48,7 @@ const Text = styled.p`
 	}
 `;
 
+// Functional Component
 export const HeroCard = ({ character, check, setCheck }) => {
 	const { store, actions } = useContext(Context);
 
@@ -56,19 +58,24 @@ export const HeroCard = ({ character, check, setCheck }) => {
 		toggle();
 	};
 
+	// With this checker i'm ensuring that if the user goes to another page or does a search and the character
+	// he has clicked as favorite appears again mantains the star that shows it has been clicked already.
 	let favoriteChecker = store.favorites.characters.filter(favorite => {
 		return favorite.id === character.id;
 	});
 	const [favorite, setFavorite] = useState(favoriteChecker.length > 0 ? true : false);
 	const addFavorite = e => {
-		e.stopPropagation(); // Prevent that the onClick of the Card component gets trigger when favorite is clicked
+		// Prevents the triggering of the Card onClick when favorite star is clicked.
+		e.stopPropagation(); 
+		// Here i'm checking if favorite has been already clicked so it gets pulled out of the 
+		// array if it has and pushed in if it hasn't.
 		if (favorite) {
 			setFavorite(!favorite);
 			let newFavoritesArray = store.favorites.characters.filter(favorite => {
-				return favorite.id != character.id;
+				return favorite.id !== character.id;
 			});
 			store.favorites.characters = newFavoritesArray;
-			if (check != undefined) {
+			if (check !== undefined) {
 				setCheck(!check);
 			}
 		} else {

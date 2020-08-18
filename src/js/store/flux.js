@@ -1,4 +1,6 @@
+
 const getState = ({ getStore, getActions, setStore }) => {
+	// This are the variables of the API, each needed to fetch data from Marvel API
 	const APIurl = "https://gateway.marvel.com/v1/public/";
 	const APIkey = "68ae068a26531d4f74e599e28494d5db";
 	const timeStamp = "1";
@@ -26,7 +28,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					let response = await fetch(
 						`${APIurl}${resourceType}?${
-							characterName != "" ? "nameStartsWith=" + characterName + "&" : ""
+							characterName !== "" ? "nameStartsWith=" + characterName + "&" : ""
 						}ts=${timeStamp}&apikey=${APIkey}&hash=${hash}`,
 						{
 							method: "GET",
@@ -60,7 +62,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			fetchCharacterComic: async APIComicsUrl => {
-                let resources = [];
+				let resources = [];
+				// Here we make sure that the url has the secure protocols, because the property that we are 
+				// accesing comes in http, with this split we separete the http from the APIComicsUrl and add
+				// the https
                 let splitAPI = APIComicsUrl.split(":")[1];
                 let secureProtocol = `https:${splitAPI}`
 

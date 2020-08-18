@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { HeroCard } from "../components/HeroCard";
 import { Navbar } from "../components/Navbar";
 
+// Styled Components
 const ContainerCards = styled.div`
 	width: 93%;
 	margin: 53px auto 0;
@@ -44,14 +45,15 @@ const TextMatch = styled.h2`
 	}
 `;
 
+// Functional Component
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 
-	// filtering the cards that the image is not available, to then map it.
+	// filtering the cards that the images are not available, to then map the characters that have images.
 	let charactersWithImage = store.characters.filter(character => {
 		const noImageUrl = "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available";
 
-		return character.thumbnail.path != noImageUrl;
+		return character.thumbnail.path !== noImageUrl;
 	});
 	let mappedHeroCard = charactersWithImage.map(character => {
 		return <HeroCard key={character.id} character={character} />;

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Context } from "../store/Context";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { HeroCard } from "../components/HeroCard";
 import { Navbar } from "../components/Navbar";
 
+// Styled Components
 const Container = styled.div`
 	width: 93%;
 	margin: 53px auto 0;
@@ -36,9 +37,14 @@ const LinkBack = styled(Link)`
 	}
 `;
 
+// Functional Components
 export const Favorite = () => {
 	const { store, actions } = useContext(Context);
-	const [check, setCheck] = useState(false); //This is so the page renders everytime that the favorite is taken from the store.
+	
+	// This is so the page renders everytime that the favorite is taken from the array in the store. 
+	// This state is passed to the heroCard and everytime that the star is clicked gets changed this state,  
+	// hence re-rendering the page and actualizing the mapped store in the view.
+	const [check, setCheck] = useState(false); 
 
 	const currentView = "Favorite";
 
@@ -50,9 +56,9 @@ export const Favorite = () => {
 		<React.Fragment>
 			<Navbar currentView={currentView} />
 			<Container>
-				<LinkBack placing={store.favorites.characters.length != 0} to="/">
+				<LinkBack placing={store.favorites.characters.length !== 0} to="/">
 					<i className="fas fa-chevron-left" /> Back
-					{store.favorites.characters.length != 0 ? "" : ", No favorites selected, keep searching!!!"}
+					{store.favorites.characters.length !== 0 ? "" : ", No favorites selected, keep searching!!!"}
 				</LinkBack>
 				{mappedFavorites}
 			</Container>

@@ -1,10 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, {  useContext } from "react";
 import ReactDOM from "react-dom";
 import { Context } from "../store/Context";
 import styled from "styled-components";
 
 import { ComicsDescription } from "./ComicsDescription";
 
+// Styled Components
 const ModalOverlay = styled.div`
 	position: fixed;
 	top: 0;
@@ -90,18 +91,20 @@ const TextMatch = styled.h5`
 	text-align: center;
 `;
 
+// Functional component
 export const ComicsModal = ({ show, hide, character }) => {
 	const { store, actions } = useContext(Context);
 
-	let comicssWithImage = store.characterComics.filter(comic => {
+	// Here i'm checking if the comic has an image available, so that the ones that dont, dont get mapped.
+	let comicsWithImage = store.characterComics.filter(comic => {
 		const noImageUrl = "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available";
-
-		return comic.thumbnail.path != noImageUrl;
+		return comic.thumbnail.path !== noImageUrl;
 	});
-	let mappedComics = comicssWithImage.map(comic => {
+	let mappedComics = comicsWithImage.map(comic => {
 		return <ComicsDescription key={comic.id} comic={comic} hide={hide} />;
 	});
 
+	// This is a function that will return a component if the condition is met. 
 	const noMatchConditionalRender = () => {
 		if (character.comics.available === 0) {
 			return (
@@ -120,6 +123,10 @@ export const ComicsModal = ({ show, hide, character }) => {
 		store.characterComics.length = 0;
 	};
 
+	// The return has a ternary operator that is checking if show is true or false, so when is true, 
+	// using createPortal adds a child to the body, creating a modal component that shows and hide on comand.
+	// The state of the show is in the custom hook called useModal in utils, we imported it in the heroCard
+	// where the clicking of it triggers the modal.
 	return show
 		? ReactDOM.createPortal(
 				<React.Fragment>

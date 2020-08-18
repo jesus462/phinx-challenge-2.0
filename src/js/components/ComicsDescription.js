@@ -1,10 +1,11 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Context } from "../store/Context";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { stringChecker } from "../utils/stringChecker";
 
+// Styled Components
 const LinkContainer = styled(Link)`
 	text-decoration: none;
 	color: black;
@@ -38,6 +39,7 @@ const Info = styled.div`
 	text-align: ${props => (props.justify ? "justify" : "")};
 `;
 
+// FUnctional Component
 export const ComicsDescription = ({ comic, hide }) => {
 	const { store, actions } = useContext(Context);
 
@@ -46,20 +48,26 @@ export const ComicsDescription = ({ comic, hide }) => {
 		window.scrollTo(0, 0);
 		actions.setLoadingComics(store.loadingComics);
 		hide();
-		store.characterComics.length = 0; // Here i clear the array.
+		// Here i clear the array of comics shown, so when another card gets clicked there will be a fresh look.
+		store.characterComics.length = 0; 
 	};
 
+	// With this checker i'm ensuring that if the user goes to another page or does a search and the character
+	// he has clicked as favorite appears again mantains the star that shows it has been clicked already.
 	let favoriteChecker = store.favorites.comics.filter(favorite => {
 		return favorite.id === comic.id;
 	});
 	const [favorite, setFavorite] = useState(favoriteChecker.length > 0 ? true : false);
 	const addFavorite = e => {
-		e.stopPropagation(); // Prevents that the onClick of the LinkContainer component gets trigger when favorite is clicked
-		e.preventDefault(); //
+		// Prevents the triggering of the LinkContainer onClick when favorite star is clicked.
+		e.stopPropagation(); 
+		e.preventDefault(); 
+		// Here i'm checking if favorite has been already clicked so it gets pulled out of the 
+		// array if it has and pushed in if it hasn't.
 		if (favorite) {
 			setFavorite(!favorite);
 			let newFavoritesArray = store.favorites.comics.filter(favorite => {
-				return favorite.id != comic.id;
+				return favorite.id !== comic.id;
 			});
 			store.favorites.comics = newFavoritesArray;
 		} else {
@@ -68,6 +76,7 @@ export const ComicsDescription = ({ comic, hide }) => {
 		}
 	};
 
+	// In the return there is a ternary operator that is checking to change the icon of the star.
 	return (
 		<LinkContainer to="/Comic" onClick={handleClickComic}>
 			<ComicImage src={`${comic.thumbnail.path}.${comic.thumbnail.extension}`} alt={comic.title} />
@@ -78,7 +87,8 @@ export const ComicsDescription = ({ comic, hide }) => {
 						{favorite ? <i className="fas fa-star" /> : <i className="far fa-star" />}
 					</span>
 				</Info>
-				<Info justify>{stringChecker(comic.description)}</Info>
+				<Info justify>{stringChecker(comic.description)} For more click the card</Info>
+				<Info title>click for more info...</Info>
 			</ComicInfo>
 		</LinkContainer>
 	);

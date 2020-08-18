@@ -1,3 +1,5 @@
+//these function help us to check and restrict the length of the string that we want to show.
+
 export const stringChecker = string => {
 	let previewStringArray = [];
 

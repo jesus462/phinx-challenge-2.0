@@ -1,5 +1,8 @@
 {
   "name": "phinx-challenge",
+  "author": {
+    "name": "Jesus Ponce"
+  },
   "version": "0.1.0",
   "private": true,
   "dependencies": {
