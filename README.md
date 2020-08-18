@@ -1,3 +1,8 @@
+# Phinx Challenge
+This here is the challenge project for Phinx.
+
+# Create react app boilerplate
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
