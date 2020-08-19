@@ -3,6 +3,8 @@ import { Context } from "../store/Context";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+import { useKey } from '../utils/useKey';
+
 // Styled Components
 const Nav = styled.nav`
 	width: 100%;
@@ -14,7 +16,7 @@ const Nav = styled.nav`
 	position: fixed;
 	top: 0;
 	background-color: white;
-	z-index: 1;
+	z-index: 1060;
 `;
 const Logo = styled.img`
 	width: 70px;
@@ -23,6 +25,7 @@ const Logo = styled.img`
 const LinkStyled = styled(Link)`
 	width: 80%;
 	cursor: default;
+	visibility: ${props => (props.favorite ? "hidden" : "")};
 `;
 const SearchBar = styled.input`
 	width: 100%;
@@ -60,17 +63,49 @@ export const Navbar = ({ currentView }) => {
 	const [search, setSearch] = useState("");
 	const handleChangeSearh = e => {
 		setSearch(e.target.value);
-		window.scrollTo(0, 0); // This is just so when ever the search bar gets typed the page will go to the top.
-		actions.setLoadingCharacters(store.loadingCharacters);
+		if (!store.modalOn) {
+			window.scrollTo(0, 0);// This is just so when ever the search bar gets typed the page will go to the top.
+			actions.setLoadingCharacters(store.loadingCharacters);
+		} else {
+			actions.setLoadingComics(store.loadingComics);
+		}
 	};
+	  
 	// This use effect makes sure that the action of fetching the characters gets done every time the search 
 	// parameter changes, thats why search is between [].
 	useEffect(
 		() => {
-			actions.fetchCharacters(search);
+			// Here i'm coditioning the search depending on wether the modal is on, so it looks for comics or 
+			// if its off it looks for characters
+			if (!store.modalOn) {
+				actions.fetchCharacters(search);
+			} else {
+				actions.fetchCharacterComic(store.urlComic, search);
+			}
 		},
 		[search]
 	);
+	
+	// This function prevents that the clicking of favorite in nav exits home if the modal is on.
+	const handleClickFavorite = (e) => {
+		if (store.modalOn) {
+			e.preventDefault();
+		} else {
+			window.scrollTo(0, 0);
+		}
+	};
+
+	// Here i make sure that when the enter key gets pressed the search activates.
+	const handleEnter = () => {
+		if (!store.modalOn) {
+			actions.fetchCharacters(search);
+			actions.setLoadingCharacters(store.loadingCharacters);
+		} else {
+			actions.fetchCharacterComic(store.urlComic, search);
+			actions.setLoadingComics(store.loadingComics);
+		}
+	}
+	useKey(13, handleEnter);
 	
 	// Here i'm conditioning wich Icon will show depending on the page that the user is.
 	const conditionedRender = () => {
@@ -89,7 +124,7 @@ export const Navbar = ({ currentView }) => {
 					alt="Marvel logo"
 				/>
 			</LinkStyledLogo>
-			<LinkStyled to="/">
+			<LinkStyled to="/" favorite={currentView === "Favorite"}>
 				<SearchBar
 					value={search}
 					onChange={handleChangeSearh}
@@ -98,7 +133,7 @@ export const Navbar = ({ currentView }) => {
 					placeholder="&#xf002; Search"
 				/>
 			</LinkStyled>
-			<LinkStyledIcon onClick={() => window.scrollTo(0, 0)} to="Favorite">
+			<LinkStyledIcon onClick={handleClickFavorite} to={currentView === "Favorite" ? "/" : "Favorite"}>
 				{conditionedRender()}
 			</LinkStyledIcon>
 		</Nav>

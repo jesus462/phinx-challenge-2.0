@@ -1,5 +1,3 @@
-import { addHttps } from "../utils/addHttps";
-
 // Here we have the data hub of our App (store) and the actions that affect it.
 const getState = ({ getStore, getActions, setStore }) => {
 	// This are the variables of the API, each needed to fetch data from Marvel API
@@ -20,7 +18,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				characters: [],
 				comics: []
 			},
-			modalOn: false
+			modalOn: false,
+			urlComic: ""
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -64,10 +63,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(err);
 				}
 			},
-			fetchCharacterComic: async APIComicsUrl => {
+			fetchCharacterComic: async (APIComicsUrl, title="")  => {
 				let resources = [];
 				try {
-					let response = await fetch(`${addHttps(APIComicsUrl)}?ts=${timeStamp}&apikey=${APIkey}&hash=${hash}`, {
+					let response = await fetch(`${APIComicsUrl}?${title !== "" ? "titleStartsWith=" + title + "&" : ""}orderBy=-onsaleDate&ts=${timeStamp}&apikey=${APIkey}&hash=${hash}`, {
 						method: "GET",
 						headers: {
 							"Content-Type": "application/JSON"
@@ -97,8 +96,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			setComic: value => {
 				setStore({ comic: [value] });
 			},
-			setShowModal: value => {
-				setStore({ modalOn! });
+			setModalOn: value => {
+				setStore({ modalOn: !value  });
+			},
+			setUrlComic: value => {
+				setStore({ urlComic: value })
 			}
 		}
 	};

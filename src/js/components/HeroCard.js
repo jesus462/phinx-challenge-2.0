@@ -55,7 +55,8 @@ export const HeroCard = ({ character, check, setCheck }) => {
 
 	const { show, toggle } = useModal();
 	const handleShow = () => {
-		actions.fetchCharacterComic(character.comics.collectionURI);
+		actions.fetchCharacterComic(addHttps(character.comics.collectionURI));
+		actions.setUrlComic(addHttps(character.comics.collectionURI));
 		toggle();
 	};
 

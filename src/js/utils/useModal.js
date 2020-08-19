@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { Context } from "../store/Context";
 // Custom hook for the logic of the modal for the comics.
 export const useModal = () => {
+	const { store, actions } = useContext(Context);
 	const [show, setShow] = useState(false);
 	const toggle = () => {
 		setShow(!show);
+		actions.setModalOn(store.modalOn); 
 		// This conditional is here to stop the scrolling in the background depending if the modal is showing or not.
 		// It also checks the width of the screen to see if it varies when openning the modal, so when it is, the modal
 		// doesnt affects the sizing of the page.

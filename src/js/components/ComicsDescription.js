@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 import { stringChecker } from "../utils/stringChecker";
 import { addHttps } from "../utils/addHttps";
+import { useKey } from '../utils/useKey';
 
 // Styled Components
 const LinkContainer = styled(Link)`
@@ -76,6 +77,8 @@ export const ComicsDescription = ({ comic, hide }) => {
 			store.favorites.comics.push(comic);
 		}
 	};
+
+	useKey(27, hide); //With this i'm making sure that the modal also closes when the scape key is pressed.
 
 	// In the return there is a ternary operator that is checking to change the icon of the star.
 	return (

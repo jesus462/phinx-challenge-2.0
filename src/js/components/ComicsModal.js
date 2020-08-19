@@ -108,7 +108,13 @@ export const ComicsModal = ({ show, hide, character }) => {
 		if (character.comics.available === 0) {
 			return (
 				<TextMatch>
-					This hero doesnt have comics <i className="far fa-frown" />
+					This hero does not have comics <i className="far fa-frown" />
+				</TextMatch>
+			);
+		} else if(mappedComics.length === 0) {
+			return (
+				<TextMatch>
+					This hero does not have comics by that title, keep trying.
 				</TextMatch>
 			);
 		} else {
@@ -121,7 +127,7 @@ export const ComicsModal = ({ show, hide, character }) => {
 		hide();
 		store.characterComics.length = 0;
 	};
-
+	
 	// The return has a ternary operator that is checking if show is true or false, if true, 
 	// createPortal adds a child to the body, creating a modal component that shows and hide on comand.
 	// The state of the show is in the custom hook called useModal in utils, we imported it in the heroCard
