@@ -19,7 +19,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			favorites: {
 				characters: [],
 				comics: []
-			}
+			},
+			modalOn: false
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -95,6 +96,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			setComic: value => {
 				setStore({ comic: [value] });
+			},
+			setShowModal: value => {
+				setStore({ modalOn! });
 			}
 		}
 	};

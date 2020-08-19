@@ -104,7 +104,6 @@ export const ComicsModal = ({ show, hide, character }) => {
 		return <ComicsDescription key={comic.id} comic={comic} hide={hide} />;
 	});
 
-	// This is a function that will return a component if the condition is met. 
 	const noMatchConditionalRender = () => {
 		if (character.comics.available === 0) {
 			return (
