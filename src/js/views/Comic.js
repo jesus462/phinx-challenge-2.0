@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { Navbar } from "../components/Navbar";
+import { addHttps } from "../utils/addHttps";
 
 // Styled Components
 const Container = styled.div`
@@ -77,7 +78,7 @@ export const Comic = () => {
 			return (
 				<React.Fragment>
 					<ComicImage
-						src={`${store.comic[0].thumbnail.path}.${store.comic[0].thumbnail.extension}`}
+						src={`${addHttps(store.comic[0].thumbnail.path)}.${store.comic[0].thumbnail.extension}`}
 						alt={store.comic[0].title}
 					/>
 					<ComicInfo>

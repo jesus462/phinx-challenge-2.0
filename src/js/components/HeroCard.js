@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { ComicsModal } from "./ComicsModal";
 import { useModal } from "../utils/useModal";
+import { addHttps } from "../utils/addHttps";
 
 // Styled Components
 const Card = styled.div`
@@ -87,7 +88,7 @@ export const HeroCard = ({ character, check, setCheck }) => {
 	return (
 		<React.Fragment>
 			<Card onClick={handleShow}>
-				<Image src={`${character.thumbnail.path}.${character.thumbnail.extension}`} alt={character.name} />
+				<Image src={`${addHttps(character.thumbnail.path)}.${character.thumbnail.extension}`} alt={character.name} />
 				<Text right>
 					<span onClick={addFavorite}>
 						{favorite ? <i className="fas fa-star" /> : <i className="far fa-star" />}

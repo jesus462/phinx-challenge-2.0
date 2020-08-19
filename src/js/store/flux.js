@@ -1,3 +1,5 @@
+import { addHttps } from "../utils/addHttps";
+
 // Here we have the data hub of our App (store) and the actions that affect it.
 const getState = ({ getStore, getActions, setStore }) => {
 	// This are the variables of the API, each needed to fetch data from Marvel API
@@ -63,14 +65,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			fetchCharacterComic: async APIComicsUrl => {
 				let resources = [];
-				// Here we make sure that the url has the secure protocols, because the property that we are 
-				// accesing comes in http, with this split we separete the http from the APIComicsUrl and add
-				// the https
-                let splitAPI = APIComicsUrl.split(":")[1];
-                let secureProtocol = `https:${splitAPI}`
-
 				try {
-					let response = await fetch(`${secureProtocol}?ts=${timeStamp}&apikey=${APIkey}&hash=${hash}`, {
+					let response = await fetch(`${addHttps(APIComicsUrl)}?ts=${timeStamp}&apikey=${APIkey}&hash=${hash}`, {
 						method: "GET",
 						headers: {
 							"Content-Type": "application/JSON"

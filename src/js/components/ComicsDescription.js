@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { stringChecker } from "../utils/stringChecker";
+import { addHttps } from "../utils/addHttps";
 
 // Styled Components
 const LinkContainer = styled(Link)`
@@ -79,7 +80,7 @@ export const ComicsDescription = ({ comic, hide }) => {
 	// In the return there is a ternary operator that is checking to change the icon of the star.
 	return (
 		<LinkContainer to="/Comic" onClick={handleClickComic}>
-			<ComicImage src={`${comic.thumbnail.path}.${comic.thumbnail.extension}`} alt={comic.title} />
+			<ComicImage src={`${addHttps(comic.thumbnail.path)}.${comic.thumbnail.extension}`} alt={comic.title} />
 			<ComicInfo>
 				<Info title>
 					{comic.title}{" "}
