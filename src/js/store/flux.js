@@ -19,7 +19,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				comics: []
 			},
 			modalOn: false,
-			urlComic: ""
+			urlComic: "",
+			querySearch: {
+				character: [],
+				comic: []
+			}
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -101,6 +105,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			setUrlComic: value => {
 				setStore({ urlComic: value })
+			},
+			setQuerySearch: (characterString, comicString) => {
+				setStore({ 
+					querySearch:{
+						character: [characterString],
+						comic: [comicString]
+					}
+				 });
 			}
 		}
 	};

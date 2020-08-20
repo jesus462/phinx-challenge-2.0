@@ -9,14 +9,21 @@ import { useKey } from '../utils/useKey';
 export const Navbar = () => {
 	const { store, actions } = useContext(Context);
 	
-	// Querying the URL for the 
-	let query = new URLSearchParams(useLocation().search);
+	// This is to check the path in wich we are currently on.
+	const location = useLocation();
+	const currentPath = location.pathname;
+
+	// Querying the URL to make a search
+	let query = new URLSearchParams(location.search);
 	let character = query.get("character");
 	let comic = query.get("comic");
-	console.log(comic);
+
     const [search, setSearch] = useState(""); //Manages the state of the search bar.
 	const handleSearch = (e) => {
 		setSearch(e.target.value);
+		if(store.querySearch.comic[0] !== null) {
+			actions.setQuerySearch('', ''); 
+		}
 		if (!store.modalOn) {
 			window.scrollTo(0, 0);// This is just so when ever the search bar gets typed the page will go to the top.
 			actions.setLoadingCharacters(store.loadingCharacters);
@@ -32,7 +39,8 @@ export const Navbar = () => {
             // Here i'm conditioning the search depending on wether the modal is on, so it looks for comics or 
             // if its off it looks for characters
             if (!store.modalOn) {
-                actions.fetchCharacters(character ? character : search);
+				actions.setQuerySearch(character, comic); // Here, i'm making global the query string that received from the url.
+				actions.fetchCharacters(character ? character : search);
             } else {
                 actions.fetchCharacterComic(store.urlComic, search);
             }
@@ -40,11 +48,6 @@ export const Navbar = () => {
         [search]
 	);
 	
-	// This is to check the path in wich we are currently on.
-	const location = useLocation();
-	const currentPath = location.pathname;
-	
-
 	// This function prevents that the clicking of favorite in nav exits home if the modal is on.
 	const handleClickFavorite = (e) => {
 		if (store.modalOn) {

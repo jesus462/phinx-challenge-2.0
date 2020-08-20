@@ -10,9 +10,10 @@ import { addHttps } from "../utils/addHttps";
 export const HeroCard = ({ character, check, setCheck }) => {
 	const { store, actions } = useContext(Context);
 	const { show, toggle } = useModal();
-	
+
 	const handleShow = () => {
-		actions.fetchCharacterComic(addHttps(character.comics.collectionURI));
+		let queryComic = store.querySearch.comic[0];
+		actions.fetchCharacterComic(addHttps(character.comics.collectionURI), queryComic !== null ? queryComic : "");
 		actions.setUrlComic(addHttps(character.comics.collectionURI));
 		toggle();
 	};

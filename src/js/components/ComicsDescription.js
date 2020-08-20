@@ -57,5 +57,5 @@ export const ComicsDescription = ({ comic, hide }) => {
 				<Info title>click for more info...</Info>
 			</ComicInfo>
 		</LinkContainer>
-	);
+	); 
 };
