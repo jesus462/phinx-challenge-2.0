@@ -1,59 +1,16 @@
-import React, { useState, useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Context } from "../store/Context";
-import styled from "styled-components";
+
+import { Card, Image, Text } from "./styles/HeroCardStyled";
 
 import { ComicsModal } from "./ComicsModal";
 import { useModal } from "../utils/useModal";
 import { addHttps } from "../utils/addHttps";
 
-// Styled Components
-const Card = styled.div`
-	margin: 15px;
-	width: 240px;
-	height: 320px;
-	border: 1px solid black;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	position: relative;
-	@media (max-width: 605px) {
-		width: 130px;
-		height: 210px;
-		margin: 10px 10px;
-	}
-
-	:hover,
-	:active {
-		opacity: 0.95;
-		box-shadow: 0 10px 10px rgba(0, 0, 0, 1);
-		cursor: pointer;
-	}
-`;
-const Image = styled.img`
-	height: 100%;
-	width: 100%;
-	pointer-events: none;
-	position: absolute;
-	z-index: -1;
-`;
-const Text = styled.p`
-	margin: 15px;
-	color: white;
-	text-align: ${props => (props.right ? "right" : "left")};
-	font-size: 20px;
-
-	span {
-		background-color: rgba(0, 0, 0, 0.2);
-		border-radius: 14px;
-		padding: 2px;
-	}
-`;
-
-// Functional Component
 export const HeroCard = ({ character, check, setCheck }) => {
 	const { store, actions } = useContext(Context);
-
 	const { show, toggle } = useModal();
+	
 	const handleShow = () => {
 		actions.fetchCharacterComic(addHttps(character.comics.collectionURI));
 		actions.setUrlComic(addHttps(character.comics.collectionURI));
@@ -66,9 +23,10 @@ export const HeroCard = ({ character, check, setCheck }) => {
 		return favorite.id === character.id;
 	});
 	const [favorite, setFavorite] = useState(favoriteChecker.length > 0 ? true : false);
-	const addFavorite = e => {
+	const handleFavorite = e => {
 		// Prevents the triggering of the Card onClick when favorite star is clicked.
 		e.stopPropagation(); 
+		e.preventDefault(); 
 		// Here i'm checking if favorite has been already clicked so it gets pulled out of the 
 		// array if it has and pushed in if it hasn't.
 		if (favorite) {
@@ -91,7 +49,7 @@ export const HeroCard = ({ character, check, setCheck }) => {
 			<Card onClick={handleShow}>
 				<Image src={`${addHttps(character.thumbnail.path)}.${character.thumbnail.extension}`} alt={character.name} />
 				<Text right>
-					<span onClick={addFavorite}>
+					<span onClick={handleFavorite}>
 						{favorite ? <i className="fas fa-star" /> : <i className="far fa-star" />}
 					</span>
 				</Text>

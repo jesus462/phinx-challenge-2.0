@@ -7,6 +7,11 @@ export const useModal = () => {
 	const toggle = () => {
 		setShow(!show);
 		actions.setModalOn(store.modalOn); 
+		// Here i clear the array of comics shown, so when another card gets clicked there will be a fresh look.
+		store.characterComics.length = 0; 
+		if (show) {
+		actions.setLoadingComics(store.loadingComics);
+		}
 		// This conditional is here to stop the scrolling in the background depending if the modal is showing or not.
 		// It also checks the width of the screen to see if it varies when openning the modal, so when it is, the modal
 		// doesnt affects the sizing of the page.
