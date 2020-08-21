@@ -6,7 +6,7 @@ import { Container, LinkBack } from "./styles/FavoriteStyled";
 import { HeroCard } from "../components/HeroCard";
 
 export const Favorite = () => {
-	const { store, actions } = useContext(Context);
+	const { store } = useContext(Context);
 	
 	// This is so the page renders everytime that the favorite is taken from the array in the store. 
 	// This state is passed to the heroCard and everytime that the star is clicked gets changed this state,  

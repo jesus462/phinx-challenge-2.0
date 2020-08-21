@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { Context } from "../store/Context";
 
 import { LinkContainer, ComicImage, ComicInfo, Info } from "./styles/ComicsDescriptionStyled";
@@ -6,38 +6,18 @@ import { LinkContainer, ComicImage, ComicInfo, Info } from "./styles/ComicsDescr
 import { stringChecker } from "../utils/stringChecker";
 import { addHttps } from "../utils/addHttps";
 import { useKey } from '../utils/useKey';
+import { useFavorite } from "../utils/useFavorite";
 
 export const ComicsDescription = ({ comic, hide }) => {
-	const { store, actions } = useContext(Context);
+	const { actions } = useContext(Context);
+
+	//Just like in HeroCard this Custom Hook helps me manage the state and changes in favorites.
+	const { favorite, handleFavorite } = useFavorite('comics', comic); 
 
 	const handleClickComic = () => {
-		actions.setComic(comic);
+		actions.setComicPreview(comic);
 		window.scrollTo(0, 0);
 		hide();
-	};
-
-	// With this checker i'm ensuring that if the user goes to another page or does a search and the character
-	// he has clicked as favorite appears again mantains the star that shows it has been clicked already.
-	let favoriteChecker = store.favorites.comics.filter(favorite => {
-		return favorite.id === comic.id;
-	});
-	const [favorite, setFavorite] = useState(favoriteChecker.length > 0 ? true : false);
-	const addFavorite = e => {
-		// Prevents the triggering of the LinkContainer onClick when favorite star is clicked.
-		e.stopPropagation(); 
-		e.preventDefault(); 
-		// Here i'm checking if favorite has been already clicked so it gets pulled out of the 
-		// array if it has and pushed in if it hasn't.
-		if (favorite) {
-			setFavorite(!favorite);
-			let newFavoritesArray = store.favorites.comics.filter(favorite => {
-				return favorite.id !== comic.id;
-			});
-			store.favorites.comics = newFavoritesArray;
-		} else {
-			setFavorite(!favorite);
-			store.favorites.comics.push(comic);
-		}
 	};
 
 	useKey(27, hide); //With this i'm making sure that the modal also closes when the scape key is pressed.
@@ -49,7 +29,7 @@ export const ComicsDescription = ({ comic, hide }) => {
 			<ComicInfo>
 				<Info title>
 					{comic.title}{" "}
-					<span onClick={addFavorite}>
+					<span onClick={handleFavorite}>
 						{favorite ? <i className="fas fa-star" /> : <i className="far fa-star" />}
 					</span>
 				</Info>

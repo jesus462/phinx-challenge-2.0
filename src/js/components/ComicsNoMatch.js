@@ -5,8 +5,9 @@ import { TextMatch } from "./styles/ComicsNoMatchStyled";
 
 import { useKey } from '../utils/useKey';
 
-export const ComicsNoMatch = ({character, mappedComics, hide}) => {
-    const { store, actions } = useContext(Context);
+// This component is mainly to save space in the ComicsModal
+export const ComicsNoMatch = ({character, hide}) => {
+    const { store } = useContext(Context);
 
     let comicsWithImage = store.characterComics.filter(comic => {
 		const noImageUrl = "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available";

@@ -7,25 +7,25 @@ import { addHttps } from "../utils/addHttps";
 import { datesChecker } from "../utils/datesChecker";
 
 export const Comic = () => {
-	const { store, actions } = useContext(Context);
+	const { store } = useContext(Context);
 
-	const conditionedRender = () => {
-		if (store.comic.length !== 0) {
-			let mappedCreators = store.comic[0].creators.items.map(creator => {
+	const conditionedRenderComic = () => {
+		if (store.comicPreview.length !== 0) {
+			let mappedCreators = store.comicPreview[0].creators.items.slice(0, 5).map(creator => {
 				return <Info subTitle>{creator.role}: {creator.name}</Info>;
 			});
 
 			return (
 				<React.Fragment>
 					<ComicImage
-						src={`${addHttps(store.comic[0].thumbnail.path)}.${store.comic[0].thumbnail.extension}`}
-						alt={store.comic[0].title}
+						src={`${addHttps(store.comicPreview[0].thumbnail.path)}.${store.comicPreview[0].thumbnail.extension}`}
+						alt={store.comicPreview[0].title}
 					/>
 					<ComicInfo>
-						<Title>{store.comic[0].title}</Title>
-						<Info subTitle>Published: {datesChecker(store.comic[0].dates)}</Info>
+						<Title>{store.comicPreview[0].title}</Title>
+						<Info subTitle>Published: {datesChecker(store.comicPreview[0].dates)}</Info>
 						{mappedCreators}
-						<Info>{store.comic[0].description}</Info>
+						<Info>{store.comicPreview[0].description}</Info>
 					</ComicInfo>
 				</React.Fragment>
 			);
@@ -37,11 +37,11 @@ export const Comic = () => {
 	return (
 		<React.Fragment>
 			<Container>
-				<LinkBack absolute={store.comic.length > 0} to="/">
+				<LinkBack absolute={store.comicPreview.length > 0} to="/">
 					<i className="fas fa-chevron-left" /> Back
-					{store.comic.length !== 0 ? "" : ", No comic selected, keep looking!!!"}
+					{store.comicPreview.length !== 0 ? "" : ", No comic selected, keep looking!!!"}
 				</LinkBack>
-				{conditionedRender()}
+				{conditionedRenderComic()}
 			</Container>
 		</React.Fragment>
 	);

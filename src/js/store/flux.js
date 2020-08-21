@@ -13,7 +13,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			noMatchCharacter: false,
 			characterComics: [],
 			loadingComics: true,
-			comic: [],
+			comicPreview: [],
 			favorites: {
 				characters: [],
 				comics: []
@@ -67,7 +67,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(err);
 				}
 			},
-			fetchCharacterComic: async (APIComicsUrl, title="")  => {
+			fetchCharacterComics: async (APIComicsUrl, title="")  => {
 				let resources = [];
 				try {
 					let response = await fetch(`${APIComicsUrl}?${title !== "" ? "titleStartsWith=" + title + "&" : ""}orderBy=-onsaleDate&ts=${timeStamp}&apikey=${APIkey}&hash=${hash}`, {
@@ -97,14 +97,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 			setLoadingComics: value => {
 				setStore({ loadingComics: !value });
 			},
-			setComic: value => {
-				setStore({ comic: [value] });
+			setComicPreview: value => {
+				setStore({ comicPreview: [value] });
 			},
 			setModalOn: value => {
 				setStore({ modalOn: !value  });
 			},
 			setUrlComic: value => {
-				setStore({ urlComic: value })
+				setStore({ urlComic: value });
 			},
 			setQuerySearch: (characterString, comicString) => {
 				setStore({ 

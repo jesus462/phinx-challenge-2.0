@@ -1,48 +1,26 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Context } from "../store/Context";
 
 import { Card, Image, Text } from "./styles/HeroCardStyled";
 
 import { ComicsModal } from "./ComicsModal";
 import { useModal } from "../utils/useModal";
+import { useFavorite } from "../utils/useFavorite";
 import { addHttps } from "../utils/addHttps";
 
 export const HeroCard = ({ character, check, setCheck }) => {
 	const { store, actions } = useContext(Context);
 	const { show, toggle } = useModal();
+	// Custom Hook that helps me manage the state and changes in favorites.
+	const { favorite, handleFavorite } = useFavorite('characters', character, check, setCheck);
 
 	const handleShow = () => {
-		let queryComic = store.querySearch.comic[0];
-		actions.fetchCharacterComic(addHttps(character.comics.collectionURI), queryComic !== null ? queryComic : "");
+		// This queryComic is to condition the search of the comic to the title inputed in the query string. And to check
+		// if in fact has been made a query string with the param comic.
+		let queryComic = store.querySearch.comic[0]; 
+		actions.fetchCharacterComics(addHttps(character.comics.collectionURI), queryComic !== null ? queryComic : "");
 		actions.setUrlComic(addHttps(character.comics.collectionURI));
 		toggle();
-	};
-
-	// With this checker i'm ensuring that if the user goes to another page or does a search and the character
-	// he has clicked as favorite appears again, maintains the star that shows it has been clicked already.
-	let favoriteChecker = store.favorites.characters.filter(favorite => {
-		return favorite.id === character.id;
-	});
-	const [favorite, setFavorite] = useState(favoriteChecker.length > 0 ? true : false);
-	const handleFavorite = e => {
-		// Prevents the triggering of the Card onClick when favorite star is clicked.
-		e.stopPropagation(); 
-		e.preventDefault(); 
-		// Here i'm checking if favorite has been already clicked so it gets pulled out of the 
-		// array if it has and pushed in if it hasn't.
-		if (favorite) {
-			setFavorite(!favorite);
-			let newFavoritesArray = store.favorites.characters.filter(favorite => {
-				return favorite.id !== character.id;
-			});
-			store.favorites.characters = newFavoritesArray;
-			if (check !== undefined) {
-				setCheck(!check);
-			}
-		} else {
-			setFavorite(!favorite);
-			store.favorites.characters.push(character);
-		}
 	};
 
 	return (

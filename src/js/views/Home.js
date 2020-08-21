@@ -6,7 +6,7 @@ import { ContainerCards, TextLoading, TextMatch } from "./styles/HomeStyled";
 import { HeroCard } from "../components/HeroCard";
 
 export const Home = () => {
-	const { store, actions } = useContext(Context);
+	const { store } = useContext(Context);
 
 	// filtering the cards that the images are not available, to then map the characters that have images.
 	let charactersWithImage = store.characters.filter(character => {

@@ -2,13 +2,13 @@ import React, {  useContext } from "react";
 import ReactDOM from "react-dom";
 import { Context } from "../store/Context";
 
-import { ModalOverlay, ModalWrapper, Modal, Header, Main, Title, Button, TextLoading, TextMatch } from "./styles/ComicsModalStyled";
+import { ModalOverlay, ModalWrapper, Modal, Header, Main, Title, Button, TextLoading } from "./styles/ComicsModalStyled";
 
 import { ComicsDescription } from "./ComicsDescription";
 import { ComicsNoMatch } from "./ComicsNoMatch";
 
 export const ComicsModal = ({ show, hide, character }) => {
-	const { store, actions } = useContext(Context);
+	const { store } = useContext(Context);
 
 	// Here i'm checking if the comic has an image available, so that the ones that dont, dont get mapped.
 	let comicsWithImage = store.characterComics.filter(comic => {
@@ -34,7 +34,9 @@ export const ComicsModal = ({ show, hide, character }) => {
 							<Button onClick={hide}>X</Button>
 						</Header>
 						<Main>
-							{store.loadingComics ? <TextLoading>loading...</TextLoading> : mappedComics}
+							{store.loadingComics ? 
+							<TextLoading>loading...</TextLoading> 
+							: mappedComics}
 							<ComicsNoMatch character={character} hide={hide}></ComicsNoMatch>
 						</Main>
 					</Modal>

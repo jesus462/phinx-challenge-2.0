@@ -88,7 +88,3 @@ export const TextLoading = styled.h5`
 		}
 	}
 `;
-
-export const TextMatch = styled.h5`
-	text-align: center;
-`;
