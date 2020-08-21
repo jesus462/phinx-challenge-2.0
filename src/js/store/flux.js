@@ -59,12 +59,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 								noMatchCharacter: true
 							});
 						}
-						console.log("All Good!!!");
+						//console.log("All Good!!!");
 					} else {
-						console.log(response.status);
+						//console.log(response.status);
 					}
 				} catch (err) {
-					console.log(err);
+					//console.log(err);
 				}
 			},
 			fetchCharacterComics: async (APIComicsUrl, title="")  => {
@@ -83,12 +83,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 							characterComics: resources,
 							loadingComics: false
 						});
-						console.log("Good, comics!!!");
+						//console.log("Good, comics!!!");
 					} else {
-						console.log(response.status);
+						//console.log(response.status);
 					}
 				} catch (err) {
-					console.log(err);
+					//console.log(err);
 				}
 			},
 			setLoadingCharacters: value => {
