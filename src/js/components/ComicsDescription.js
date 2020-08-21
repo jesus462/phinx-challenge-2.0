@@ -19,7 +19,7 @@ export const ComicsDescription = ({ comic, hide }) => {
 		window.scrollTo(0, 0);
 		hide();
 	};
-
+	
 	useKey(27, hide); //With this i'm making sure that the modal also closes when the scape key is pressed.
 
 	// In the return there is a ternary operator that is checking to change the icon of the star.
@@ -33,7 +33,7 @@ export const ComicsDescription = ({ comic, hide }) => {
 						{favorite ? <i className="fas fa-star" /> : <i className="far fa-star" />}
 					</span>
 				</Info>
-				<Info justify>{stringChecker(comic.description)} For more click the card</Info>
+				<Info justify>{stringChecker(comic.description)}</Info>
 				<Info title>click for more info...</Info>
 			</ComicInfo>
 		</LinkContainer>

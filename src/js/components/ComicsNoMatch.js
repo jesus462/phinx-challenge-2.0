@@ -14,7 +14,8 @@ export const ComicsNoMatch = ({character, hide}) => {
 		return comic.thumbnail.path !== noImageUrl;
 	});
 
-    useKey(27, hide); //With this i'm making sure that the modal also closes when the scape key is pressed.
+	useKey(27, hide); //With this i'm making sure that the modal also closes when the scape key is pressed.
+
     return character.comics.available === 0 && !store.loadingComics ? (
         <TextMatch>
             No comics available <i className="far fa-frown" />
@@ -23,6 +24,6 @@ export const ComicsNoMatch = ({character, hide}) => {
             <TextMatch>
                 This hero does not have comics by that title, keep trying.
             </TextMatch>
-        ) : ('')         
+        ) : null        
     ); 
 };

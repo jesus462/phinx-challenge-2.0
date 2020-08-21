@@ -6,7 +6,7 @@ export const datesChecker = dateArray => {
     });
 
     let year = dateFilter[0].date.split("-")[0];
-	let month = dateFilter[0].date.split("-")[1];
+	let month = dateFilter[0].date.split("-")[1] - 1;
     let day = dateFilter[0].date.split("-")[2].split("T")[0];
     let sortedDate = new Date(year, month, day).toDateString().split(' ');
 
