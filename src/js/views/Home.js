@@ -18,22 +18,16 @@ export const Home = () => {
 		return <HeroCard key={character.id} character={character} />;
 	});
 
-	const noMatchConditionalRender = () => {
-		if (store.noMatchCharacter && !store.loadingCharacters) {
-			return (
-				<TextMatch>
-					No match found, try again <i className="far fa-smile-wink" />
-				</TextMatch>
-			);
-		} else {
-			return;
-		}
-	};
-
 	return (
 		<React.Fragment>
 			<ContainerCards>
-				{noMatchConditionalRender()}
+				{store.noMatchCharacter && !store.loadingCharacters ? (
+					<TextMatch>
+					No match found, try again <i className="far fa-smile-wink" />
+					</TextMatch> 
+				) : (
+					null
+				)}
 				{store.loadingCharacters ? <TextLoading>loading...</TextLoading> : mappedHeroCard}
 			</ContainerCards>
 		</React.Fragment>

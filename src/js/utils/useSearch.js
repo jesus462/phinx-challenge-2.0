@@ -10,7 +10,7 @@ export const useSearch = () => {
     
     // Here i'm generating a random letter so every time the page gets reloaded and there is no query string
     // there will be new random characters, there will also be new characters if the search parameter is empty.
-    var randomLetter = String.fromCharCode(97 + Math.floor(Math.random() * (25 - 0)) + 0);
+    var randomChar = String.fromCharCode(97 + Math.floor(Math.random() * (25 - 0)) + 0);
 
     // Querying the URL to make a search
 	let query = new URLSearchParams(useLocation().search);
@@ -26,7 +26,7 @@ export const useSearch = () => {
 			window.scrollTo(0, 0);// This is just so when ever the search bar gets typed the page will go to the top.
 			actions.setLoadingCharacters(store.loadingCharacters);
 		} else {
-			actions.setLoadingComics(store.loadingComics);
+            actions.setLoadingComics(store.loadingComics);
 		}
 	};
 	
@@ -39,7 +39,7 @@ export const useSearch = () => {
             // if its off it looks for characters
             if (!store.modalOn) {
 				actions.setQuerySearch(character, comic); // Here, i'm making global the query string received from the url.
-                actions.fetchCharacters(character !== null ? character : (search === "" ? randomLetter : search));
+                actions.fetchCharacters(character !== null ? character : (search === "" ? randomChar : search));
             } else {
                 actions.fetchCharacterComics(store.urlComic, search);
             }

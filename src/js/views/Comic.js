@@ -30,7 +30,7 @@ export const Comic = () => {
 				</React.Fragment>
 			);
 		} else {
-			return;
+			return null;
 		}
 	};
 
